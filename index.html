@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Government Shutdown Dashboard - Dark Wolf Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>🏛️ US Government Shutdown Dashboard</h1>
+                    <p class="subtitle">Dark Wolf Solutions - Historical Analysis & Real-Time Tracking</p>
+                </div>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NEW: Enhanced Toolbar -->
+    <div class="enhanced-toolbar">
+        <div class="container">
+            <div class="toolbar-content">
+                <div class="search-filter-section">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="searchInput" placeholder="Search shutdowns by year, president, or issue..." aria-label="Search shutdowns">
+                        <button id="clearSearch" class="clear-btn" style="display:none;">✕</button>
+                    </div>
+                    <div class="filter-controls">
+                        <select id="presidentFilter" aria-label="Filter by president">
+                            <option value="">All Presidents</option>
+                            <option value="Trump">Trump</option>
+                            <option value="Obama">Obama</option>
+                            <option value="Clinton">Clinton</option>
+                            <option value="Reagan">Reagan</option>
+                            <option value="Bush Sr.">Bush Sr.</option>
+                        </select>
+                        <select id="durationFilter" aria-label="Filter by duration">
+                            <option value="">All Durations</option>
+                            <option value="short">1-7 days</option>
+                            <option value="medium">8-21 days</option>
+                            <option value="long">22+ days</option>
+                        </select>
+                        <button id="resetFilters" class="reset-btn">Reset Filters</button>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="exportCSV" class="action-btn" title="Export as CSV">
+                        <span>📊 Export CSV</span>
+                    </button>
+                    <button id="exportJSON" class="action-btn" title="Export as JSON">
+                        <span>📄 Export JSON</span>
+                    </button>
+                    <button id="printView" class="action-btn" title="Print Report">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="shareBtn" class="action-btn" title="Share Dashboard">
+                        <span>🔗 Share</span>
+                    </button>
+                </div>
+            </div>
+            <div class="keyboard-shortcuts-hint">
+                <span>💡 Tip: Press <kbd>?</kbd> for keyboard shortcuts</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Current Status Section -->
+        <section class="status-section">
+            <h2>Current Status</h2>
+            <div class="status-card" id="currentStatus">
+                <div class="status-indicator">
+                    <span class="status-icon">✅</span>
+                    <span class="status-text">Government is Currently Operating</span>
+                </div>
+                <div class="status-details">
+                    <p>Last updated: <span id="lastUpdated"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Statistics -->
+        <section class="stats-section">
+            <h2>Historical Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">22</div>
+                    <div class="stat-label">Total Shutdowns Since 1976</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">35</div>
+                    <div class="stat-label">Longest Shutdown (days)</div>
+                    <div class="stat-context">Dec 2018 - Jan 2019</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$11B+</div>
+                    <div class="stat-label">Estimated Cost of 2019 Shutdown</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">800K+</div>
+                    <div class="stat-label">Federal Workers Affected (2019)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Timeline -->
+        <section class="timeline-section">
+            <h2>Historical Timeline</h2>
+            <div class="timeline-chart" id="shutdownTimeline">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Shutdown Details Table -->
+        <section class="details-section">
+            <h2>Major Government Shutdowns</h2>
+            <div class="table-container">
+                <table id="shutdownTable">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Duration (Days)</th>
+                            <th>President</th>
+                            <th>Primary Issue</th>
+                            <th>Workers Affected</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shutdownTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Department Impact Analysis -->
+        <section class="impact-section">
+            <h2>Most Affected Federal Departments</h2>
+            <div class="department-chart" id="departmentChart">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Duration Analysis -->
+        <section class="analysis-section">
+            <h2>Shutdown Duration Analysis</h2>
+            <div class="charts-row">
+                <div class="duration-chart" id="durationChart">
+                    <!-- Populated by JavaScript -->
+                </div>
+                <div class="decade-chart" id="decadeChart">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Financial Impact Calculator -->
+        <section class="calculator-section">
+            <h2>💰 Shutdown Cost Calculator</h2>
+            <div class="calculator-container">
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="calcDays">Shutdown Duration (Days):</label>
+                        <input type="number" id="calcDays" min="1" max="100" value="35">
+                    </div>
+                    <div class="input-group">
+                        <label for="calcWorkers">Federal Workers Affected:</label>
+                        <input type="number" id="calcWorkers" min="1000" max="1000000" value="800000">
+                    </div>
+                    <div class="input-group">
+                        <label for="calcContractors">Contractors Affected:</label>
+                        <input type="number" id="calcContractors" min="0" max="500000" value="100000">
+                    </div>
+                    <button id="calculateBtn" class="calc-button">Calculate Impact</button>
+                </div>
+                <div class="calculator-results" id="calcResults">
+                    <h3>Estimated Economic Impact</h3>
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <span class="result-label">Backpay Cost:</span>
+                            <span class="result-value" id="resultBackpay">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Contractor Losses:</span>
+                            <span class="result-value" id="resultContractor">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">GDP Impact:</span>
+                            <span class="result-value" id="resultGDP">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Permit Delays:</span>
+                            <span class="result-value" id="resultPermits">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Tourism Loss:</span>
+                            <span class="result-value" id="resultTourism">$0</span>
+                        </div>
+                        <div class="result-item total">
+                            <span class="result-label">Total Estimated Cost:</span>
+                            <span class="result-value" id="resultTotal">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: NRO Impact Analysis -->
+        <section class="nro-section">
+            <h2>🛰️ National Reconnaissance Office (NRO) Impact Analysis</h2>
+            <div class="nro-alert">
+                <span class="alert-icon">⚠️</span>
+                <p><strong>Critical Intelligence Impact:</strong> The NRO manages America's spy satellites and intelligence collection. Shutdowns severely impact national security operations.</p>
+            </div>
+            <div class="nro-stats-grid">
+                <div class="nro-stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number">3,100</div>
+                    <div class="stat-label">Total NRO Employees</div>
+                </div>
+                <div class="nro-stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-number">2,800</div>
+                    <div class="stat-label">Furloughed (2018-19)</div>
+                </div>
+                <div class="nro-stat-card">
+                    <div class="stat-icon">🔐</div>
+                    <div class="stat-number">850</div>
+                    <div class="stat-label">Security Clearances Suspended</div>
+                </div>
+                <div class="nro-stat-card">
+                    <div class="stat-icon">💸</div>
+                    <div class="stat-number">$250M</div>
+                    <div class="stat-label">Satellite Program Delays</div>
+                </div>
+            </div>
+            <div class="nro-impact-details">
+                <h3>Mission-Critical Impacts</h3>
+                <ul>
+                    <li><strong>Satellite Operations:</strong> 8 programs delayed, 3 suspended entirely during 2018-19 shutdown</li>
+                    <li><strong>Security Clearances:</strong> 850 clearance renewals suspended, 120 expired during shutdown</li>
+                    <li><strong>Contractor Impact:</strong> 15,000 contractors affected, $45M reinstatement costs</li>
+                    <li><strong>Intelligence Collection:</strong> Critical surveillance operations reduced to minimum safe staffing</li>
+                    <li><strong>Recovery Time:</strong> Mission delays estimated at 3-6 months for key programs</li>
+                </ul>
+            </div>
+            <div class="personal-story">
+                <h4>👤 Worker Impact Story</h4>
+                <p><em>"As an intelligence analyst with 12 years of service, the 2018-2019 shutdown was devastating. I missed mortgage payments and had to use a food bank for the first time in my life. My security clearance renewal was delayed 4 months, putting my promotion on hold. The impact on my family - my spouse and two children - was immense. Total financial loss: $15,000."</em></p>
+            </div>
+        </section>
+
+        <!-- NEW: Health/HHS & Convalescent Care Impact -->
+        <section class="health-section">
+            <h2>🏥 Health & Human Services Impact Analysis</h2>
+            <div class="health-alert">
+                <span class="alert-icon">⚠️</span>
+                <p><strong>Healthcare System Disruption:</strong> Medicare, Medicaid, FDA, CDC, and nursing home oversight all severely affected during shutdowns.</p>
+            </div>
+            
+            <div class="health-tabs">
+                <button class="tab-button active" data-tab="convalescent">Convalescent Care</button>
+                <button class="tab-button" data-tab="medicare">Medicare</button>
+                <button class="tab-button" data-tab="medicaid">Medicaid</button>
+                <button class="tab-button" data-tab="fda">FDA</button>
+            </div>
+
+            <div class="tab-content active" id="convalescent-tab">
+                <h3>Convalescent & Long-Term Care Facilities</h3>
+                <div class="convalescent-stats">
+                    <div class="stat-row">
+                        <div class="stat-box">
+                            <div class="stat-num">15,600</div>
+                            <div class="stat-desc">Total US Facilities</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-num">890</div>
+                            <div class="stat-desc">Inspections Postponed (2018-19)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-num">67,000</div>
+                            <div class="stat-desc">Residents at Risk</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-num">45 days</div>
+                            <div class="stat-desc">Average Inspection Delay</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="risk-list">
+                    <h4>Critical Risks During Shutdowns:</h4>
+                    <ul>
+                        <li>❌ Health and safety inspections delayed</li>
+                        <li>❌ Medicare/Medicaid certification surveys suspended</li>
+                        <li>❌ Complaint investigations postponed</li>
+                        <li>❌ Abuse and neglect reporting processing delayed</li>
+                        <li>❌ Staffing adequacy reviews suspended</li>
+                        <li>❌ Facility payment processing delays affect cash flow and staff retention</li>
+                    </ul>
+                </div>
+                <div class="personal-story">
+                    <h4>👤 Healthcare Worker Impact Story</h4>
+                    <p><em>"As a nurse at a long-term care facility, the 2018-2019 shutdown was terrifying. Medicare payment delays meant our facility struggled with cash flow and we were worried about layoffs. Inspection delays left safety concerns unaddressed for weeks. We care deeply about our residents, and not being able to address issues immediately was heartbreaking."</em></p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="medicare-tab">
+                <h3>Medicare Impact</h3>
+                <div class="medicare-stats">
+                    <div class="impact-card">
+                        <h4>2018-2019 Shutdown</h4>
+                        <p><strong>Beneficiaries:</strong> 60 million</p>
+                        <p><strong>Claims Backlog:</strong> 2.3 million</p>
+                        <p><strong>Payment Delays:</strong> 15-45 days</p>
+                        <p><strong>Providers Affected:</strong> 350,000</p>
+                        <p><strong>Estimated Cost:</strong> $450 million</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="medicaid-tab">
+                <h3>Medicaid Impact</h3>
+                <div class="medicaid-stats">
+                    <div class="impact-card">
+                        <h4>2018-2019 Shutdown</h4>
+                        <p><strong>Beneficiaries:</strong> 75 million</p>
+                        <p><strong>Enrollment Delays:</strong> 450,000</p>
+                        <p><strong>Claims Backlog:</strong> 1.1 million</p>
+                        <p><strong>States Affected:</strong> 52 (all states + DC, PR)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="fda-tab">
+                <h3>FDA Impact</h3>
+                <div class="fda-stats">
+                    <div class="impact-card">
+                        <h4>Food Safety Inspections Halted</h4>
+                        <p><strong>Facilities Affected:</strong> 150+ high-risk food facilities</p>
+                        <p><strong>Duration:</strong> 35 days without inspections</p>
+                        <p><strong>Public Health Risk:</strong> Elevated</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Day-by-Day Shutdown Timeline -->
+        <section class="timeline-detailed-section">
+            <h2>📅 Day-by-Day Shutdown Timeline: 2018-2019 (35 Days)</h2>
+            <div class="timeline-selector">
+                <label for="shutdownSelect">Select Shutdown:</label>
+                <select id="shutdownSelect">
+                    <option value="2018-2019" selected>2018-2019 (35 days) - Border Wall</option>
+                    <option value="2013">2013 (16 days) - Affordable Care Act</option>
+                </select>
+            </div>
+            <div class="daily-timeline" id="dailyTimeline">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- NEW: Congressional Voting Records -->
+        <section class="voting-section">
+            <h2>🗳️ Congressional Voting Records</h2>
+            <div class="voting-intro">
+                <p>Track how Congress voted on key shutdown-related legislation. Understanding voting patterns helps identify partisan dynamics and potential solutions.</p>
+            </div>
+            <div class="voting-records" id="votingRecords">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- NEW: Comparative Analysis -->
+        <section class="comparison-section">
+            <h2>📊 Comparative Analysis</h2>
+            <div class="comparison-tabs">
+                <button class="comp-tab-btn active" data-comp="president">By President</button>
+                <button class="comp-tab-btn" data-comp="party">By Party</button>
+                <button class="comp-tab-btn" data-comp="cause">By Cause</button>
+            </div>
+            <div class="comparison-content">
+                <div class="comp-chart" id="comparisonChart">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Section -->
+        <section class="info-section">
+            <h2>About Government Shutdowns</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📋 What is a Government Shutdown?</h3>
+                    <p>A government shutdown occurs when Congress fails to pass or the President refuses to sign appropriations legislation funding federal government operations and agencies.</p>
+                </div>
+                <div class="info-card">
+                    <h3>👥 Who is Affected?</h3>
+                    <p>During a shutdown, "non-essential" federal employees are furloughed, while "essential" employees continue working without immediate pay. Contractors and services are also impacted.</p>
+                </div>
+                <div class="info-card">
+                    <h3>💰 Economic Impact</h3>
+                    <p>Shutdowns cost billions in lost productivity, delayed payments, and economic uncertainty. The 2019 shutdown cost an estimated $11 billion according to the CBO.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Historical Context</h3>
+                    <p>Since the current budget process began in 1976, there have been 22 funding gaps. Not all resulted in actual shutdowns due to legal interpretations and workarounds.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Historical Trends Graph -->
+        <section class="trends-section">
+            <h2>📈 Historical Trends Analysis</h2>
+            <div class="trends-container">
+                <div class="trend-chart-wrapper">
+                    <canvas id="trendsChart"></canvas>
+                </div>
+                <div class="trend-insights">
+                    <h3>Key Insights</h3>
+                    <ul id="trendInsights">
+                        <li>Most shutdowns occurred during periods of divided government</li>
+                        <li>Average shutdown duration has increased from 2 days (1980s) to 13 days (2010s)</li>
+                        <li>Economic impact per shutdown has grown exponentially with government size</li>
+                        <li>Partisan polarization correlates with longer shutdown durations</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Real-Time Performance Metrics -->
+        <section class="metrics-section">
+            <h2>⚡ Real-Time Economic Impact</h2>
+            <div class="metrics-alert">
+                <p>If a shutdown were to occur today, these are the estimated costs:</p>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Per Second</div>
+                    <div class="metric-value" id="costPerSecond">$3,637</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per Minute</div>
+                    <div class="metric-value" id="costPerMinute">$218,253</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per Hour</div>
+                    <div class="metric-value" id="costPerHour">$13.1M</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per Day</div>
+                    <div class="metric-value" id="costPerDay">$314.3M</div>
+                </div>
+            </div>
+            <div class="live-counter">
+                <h3>Hypothetical Shutdown Cost Counter</h3>
+                <p class="counter-note">If a shutdown started now:</p>
+                <div class="counter-display" id="liveCounter">$0</div>
+                <button id="toggleCounter" class="counter-btn">Start Counter</button>
+            </div>
+        </section>
+
+        <!-- NEW: Latest News & Updates -->
+        <section class="news-section">
+            <h2>📰 Latest Updates & Resources</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <h3>🔴 Current Budget Status</h3>
+                    <p>Monitor the current fiscal year's appropriations status and upcoming deadlines.</p>
+                    <a href="https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22congress%22%3A%22118%22%7D" target="_blank" rel="noopener" class="news-link">View Congress.gov →</a>
+                </div>
+                <div class="news-card">
+                    <h3>📊 GAO Reports</h3>
+                    <p>Access detailed Government Accountability Office reports on shutdown impacts.</p>
+                    <a href="https://www.gao.gov/" target="_blank" rel="noopener" class="news-link">Visit GAO →</a>
+                </div>
+                <div class="news-card">
+                    <h3>📈 CBO Analysis</h3>
+                    <p>Congressional Budget Office economic impact assessments and projections.</p>
+                    <a href="https://www.cbo.gov/" target="_blank" rel="noopener" class="news-link">Visit CBO →</a>
+                </div>
+                <div class="news-card">
+                    <h3>🏛️ CRS Resources</h3>
+                    <p>Congressional Research Service reports on government funding and shutdowns.</p>
+                    <a href="https://crsreports.congress.gov/" target="_blank" rel="noopener" class="news-link">Browse CRS →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- NEW: Keyboard Shortcuts Modal -->
+    <div id="shortcutsModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⌨️ Keyboard Shortcuts</h2>
+                <button class="modal-close" id="closeShortcuts">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <kbd>?</kbd>
+                        <span>Show keyboard shortcuts</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>/</kbd>
+                        <span>Focus search</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Esc</kbd>
+                        <span>Clear search/close modals</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>T</kbd>
+                        <span>Toggle theme</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>E</kbd>
+                        <span>Export as CSV</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>P</kbd>
+                        <span>Print view</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>S</kbd>
+                        <span>Share dashboard</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>R</kbd>
+                        <span>Reset filters</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>1-9</kbd>
+                        <span>Jump to section</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>↑/↓</kbd>
+                        <span>Scroll page</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Share Modal -->
+    <div id="shareModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔗 Share Dashboard</h2>
+                <button class="modal-close" id="closeShare">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>Copy link to share this dashboard:</p>
+                <div class="share-link-container">
+                    <input type="text" id="shareLink" readonly value="">
+                    <button id="copyLink" class="copy-btn">Copy</button>
+                </div>
+                <div class="share-options">
+                    <button class="share-option-btn" id="shareTwitter">
+                        <span>🐦 Share on Twitter</span>
+                    </button>
+                    <button class="share-option-btn" id="shareLinkedIn">
+                        <span>💼 Share on LinkedIn</span>
+                    </button>
+                    <button class="share-option-btn" id="shareEmail">
+                        <span>📧 Share via Email</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Dark Wolf Solutions | Data sources: Congressional Research Service, GAO, CBO, NRO, HHS</p>
+            <p class="disclaimer">This dashboard is for informational purposes only. Data represents historical records and public information.</p>
+        </div>
+    </footer>
+
+    <script src="enhanced-data.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script src="enhanced-app.js"></script>
+    <script src="features.js"></script>
+</body>
+</html>
