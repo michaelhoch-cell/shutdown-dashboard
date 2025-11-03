@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Government Shutdown Dashboard - Dark Wolf Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🏛️ US Government Shutdown Dashboard</h1>
+            <p class="subtitle">Dark Wolf Solutions - Historical Analysis & Real-Time Tracking</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Current Status Section -->
+        <section class="status-section">
+            <h2>Current Status</h2>
+            <div class="status-card" id="currentStatus">
+                <div class="status-indicator">
+                    <span class="status-icon">✅</span>
+                    <span class="status-text">Government is Currently Operating</span>
+                </div>
+                <div class="status-details">
+                    <p>Last updated: <span id="lastUpdated"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Statistics -->
+        <section class="stats-section">
+            <h2>Historical Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">22</div>
+                    <div class="stat-label">Total Shutdowns Since 1976</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">35</div>
+                    <div class="stat-label">Longest Shutdown (days)</div>
+                    <div class="stat-context">Dec 2018 - Jan 2019</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$11B+</div>
+                    <div class="stat-label">Estimated Cost of 2019 Shutdown</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">800K+</div>
+                    <div class="stat-label">Federal Workers Affected (2019)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Timeline -->
+        <section class="timeline-section">
+            <h2>Historical Timeline</h2>
+            <div class="timeline-chart" id="shutdownTimeline">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Shutdown Details Table -->
+        <section class="details-section">
+            <h2>Major Government Shutdowns</h2>
+            <div class="table-container">
+                <table id="shutdownTable">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Duration (Days)</th>
+                            <th>President</th>
+                            <th>Primary Issue</th>
+                            <th>Workers Affected</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shutdownTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Department Impact Analysis -->
+        <section class="impact-section">
+            <h2>Most Affected Federal Departments</h2>
+            <div class="department-chart" id="departmentChart">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Duration Analysis -->
+        <section class="analysis-section">
+            <h2>Shutdown Duration Analysis</h2>
+            <div class="charts-row">
+                <div class="duration-chart" id="durationChart">
+                    <!-- Populated by JavaScript -->
+                </div>
+                <div class="decade-chart" id="decadeChart">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Section -->
+        <section class="info-section">
+            <h2>About Government Shutdowns</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📋 What is a Government Shutdown?</h3>
+                    <p>A government shutdown occurs when Congress fails to pass or the President refuses to sign appropriations legislation funding federal government operations and agencies.</p>
+                </div>
+                <div class="info-card">
+                    <h3>👥 Who is Affected?</h3>
+                    <p>During a shutdown, "non-essential" federal employees are furloughed, while "essential" employees continue working without immediate pay. Contractors and services are also impacted.</p>
+                </div>
+                <div class="info-card">
+                    <h3>💰 Economic Impact</h3>
+                    <p>Shutdowns cost billions in lost productivity, delayed payments, and economic uncertainty. The 2019 shutdown cost an estimated $11 billion according to the CBO.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Historical Context</h3>
+                    <p>Since the current budget process began in 1976, there have been 22 funding gaps. Not all resulted in actual shutdowns due to legal interpretations and workarounds.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Dark Wolf Solutions | Data sources: Congressional Research Service, GAO, CBO</p>
+            <p class="disclaimer">This dashboard is for informational purposes only. Data represents historical records and public information.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
