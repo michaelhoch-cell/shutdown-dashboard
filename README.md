@@ -6,6 +6,11 @@ An interactive web dashboard for tracking and analyzing United States government
 
 ## 🌟 Features
 
+### Theme Support
+- **Light/Dark Mode Toggle**: Switch between light and dark themes with a single click
+- **Persistent Preference**: Theme choice is saved in browser localStorage
+- **Smooth Transitions**: Animated theme switching for a polished experience
+
 ### Real-Time Status Monitoring
 - Current government operational status display
 - Last updated timestamp
@@ -143,7 +148,7 @@ This dashboard compiles data from reputable sources including:
 - **HTML5**: Semantic markup and structure
 - **CSS3**: Modern styling with CSS Grid and Flexbox
 - **JavaScript (ES6+)**: Interactive functionality
-- **Chart.js (v4.4.0)**: Data visualization library
+- **Custom SVG/CSS Visualizations**: No external dependencies
 - **Responsive Design**: Mobile-first approach
 
 ## 📱 Browser Support
@@ -176,7 +181,6 @@ For questions, issues, or suggestions, please open an issue on GitHub.
 ## 🙏 Acknowledgments
 
 - Congressional Research Service for historical data
-- Chart.js team for the excellent visualization library
 - All contributors and users of this dashboard
 
 ## 📈 Future Enhancements
