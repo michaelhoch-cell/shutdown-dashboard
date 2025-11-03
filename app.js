@@ -150,14 +150,9 @@ function createDepartmentChart() {
         
         const barFill = document.createElement('div');
         barFill.className = 'department-bar-fill';
-        barFill.style.width = '0%'; // Start at 0 for animation
+        barFill.style.width = `${widthPercent}%`; // Set final width immediately
         barFill.style.background = colors[index];
         barFill.textContent = employees.toLocaleString();
-        
-        // Animate after a short delay
-        setTimeout(() => {
-            barFill.style.width = `${widthPercent}%`;
-        }, index * 100);
         
         barContainer.appendChild(barFill);
         barWrapper.appendChild(labelDiv);
@@ -165,6 +160,9 @@ function createDepartmentChart() {
         container.appendChild(barWrapper);
     });
 }
+
+// Donut chart constants
+const DONUT_STROKE_WIDTH = 40;
 
 // Create donut chart for duration distribution
 function createDurationChart() {
@@ -211,7 +209,7 @@ function createDurationChart() {
         pathElement.setAttribute('d', path);
         pathElement.setAttribute('fill', 'none');
         pathElement.setAttribute('stroke', data.color);
-        pathElement.setAttribute('stroke-width', '40');
+        pathElement.setAttribute('stroke-width', DONUT_STROKE_WIDTH.toString());
         pathElement.classList.add('donut-segment');
         
         svg.appendChild(pathElement);

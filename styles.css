@@ -313,6 +313,7 @@ section h2 {
     overflow: hidden;
 }
 
+// CSS animation approach for smooth transitions
 .department-bar-fill {
     height: 100%;
     border-radius: 20px;
@@ -324,6 +325,17 @@ section h2 {
     font-weight: 600;
     font-size: 0.85rem;
     transition: width 1s ease;
+    width: 0;
+    animation: fillBar 1s ease forwards;
+}
+
+@keyframes fillBar {
+    from {
+        width: 0;
+    }
+    to {
+        width: var(--bar-width, 100%);
+    }
 }
 
 /* Duration Chart (Pie/Donut) */
@@ -397,7 +409,7 @@ section h2 {
     align-items: flex-end;
     gap: 20px;
     padding: 20px;
-    background: white;
+    background: var(--bg-white);
     border-radius: 8px;
     position: relative;
 }
@@ -487,11 +499,11 @@ td {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f9fafb;
+    background-color: var(--bg-light);
 }
 
 tbody tr:nth-child(even):hover {
-    background-color: #f3f4f6;
+    background-color: var(--border-color);
 }
 
 [data-theme="dark"] tbody tr:nth-child(even) {

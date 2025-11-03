@@ -167,8 +167,3 @@ const decadeData = {
     labels: ["1976-1980", "1981-1990", "1991-2000", "2001-2010", "2011-2020"],
     data: [5, 8, 3, 0, 6]
 };
-
-// Export data for use in app.js
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { shutdownData, departmentImpactData, decadeData };
-}
