@@ -21,6 +21,55 @@
         </div>
     </header>
 
+    <!-- NEW: Enhanced Toolbar -->
+    <div class="enhanced-toolbar">
+        <div class="container">
+            <div class="toolbar-content">
+                <div class="search-filter-section">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="searchInput" placeholder="Search shutdowns by year, president, or issue..." aria-label="Search shutdowns">
+                        <button id="clearSearch" class="clear-btn" style="display:none;">✕</button>
+                    </div>
+                    <div class="filter-controls">
+                        <select id="presidentFilter" aria-label="Filter by president">
+                            <option value="">All Presidents</option>
+                            <option value="Trump">Trump</option>
+                            <option value="Obama">Obama</option>
+                            <option value="Clinton">Clinton</option>
+                            <option value="Reagan">Reagan</option>
+                            <option value="Bush Sr.">Bush Sr.</option>
+                        </select>
+                        <select id="durationFilter" aria-label="Filter by duration">
+                            <option value="">All Durations</option>
+                            <option value="short">1-7 days</option>
+                            <option value="medium">8-21 days</option>
+                            <option value="long">22+ days</option>
+                        </select>
+                        <button id="resetFilters" class="reset-btn">Reset Filters</button>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="exportCSV" class="action-btn" title="Export as CSV">
+                        <span>📊 Export CSV</span>
+                    </button>
+                    <button id="exportJSON" class="action-btn" title="Export as JSON">
+                        <span>📄 Export JSON</span>
+                    </button>
+                    <button id="printView" class="action-btn" title="Print Report">
+                        <span>🖨️ Print</span>
+                    </button>
+                    <button id="shareBtn" class="action-btn" title="Share Dashboard">
+                        <span>🔗 Share</span>
+                    </button>
+                </div>
+            </div>
+            <div class="keyboard-shortcuts-hint">
+                <span>💡 Tip: Press <kbd>?</kbd> for keyboard shortcuts</span>
+            </div>
+        </div>
+    </div>
+
     <main class="container">
         <!-- Current Status Section -->
         <section class="status-section">
@@ -363,7 +412,167 @@
                 </div>
             </div>
         </section>
+
+        <!-- NEW: Historical Trends Graph -->
+        <section class="trends-section">
+            <h2>📈 Historical Trends Analysis</h2>
+            <div class="trends-container">
+                <div class="trend-chart-wrapper">
+                    <canvas id="trendsChart"></canvas>
+                </div>
+                <div class="trend-insights">
+                    <h3>Key Insights</h3>
+                    <ul id="trendInsights">
+                        <li>Most shutdowns occurred during periods of divided government</li>
+                        <li>Average shutdown duration has increased from 2 days (1980s) to 13 days (2010s)</li>
+                        <li>Economic impact per shutdown has grown exponentially with government size</li>
+                        <li>Partisan polarization correlates with longer shutdown durations</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Real-Time Performance Metrics -->
+        <section class="metrics-section">
+            <h2>⚡ Real-Time Economic Impact</h2>
+            <div class="metrics-alert">
+                <p>If a shutdown were to occur today, these are the estimated costs:</p>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Per Second</div>
+                    <div class="metric-value" id="costPerSecond">$3,637</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per Minute</div>
+                    <div class="metric-value" id="costPerMinute">$218,253</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per Hour</div>
+                    <div class="metric-value" id="costPerHour">$13.1M</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Per Day</div>
+                    <div class="metric-value" id="costPerDay">$314.3M</div>
+                </div>
+            </div>
+            <div class="live-counter">
+                <h3>Hypothetical Shutdown Cost Counter</h3>
+                <p class="counter-note">If a shutdown started now:</p>
+                <div class="counter-display" id="liveCounter">$0</div>
+                <button id="toggleCounter" class="counter-btn">Start Counter</button>
+            </div>
+        </section>
+
+        <!-- NEW: Latest News & Updates -->
+        <section class="news-section">
+            <h2>📰 Latest Updates & Resources</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <h3>🔴 Current Budget Status</h3>
+                    <p>Monitor the current fiscal year's appropriations status and upcoming deadlines.</p>
+                    <a href="https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22congress%22%3A%22118%22%7D" target="_blank" rel="noopener" class="news-link">View Congress.gov →</a>
+                </div>
+                <div class="news-card">
+                    <h3>📊 GAO Reports</h3>
+                    <p>Access detailed Government Accountability Office reports on shutdown impacts.</p>
+                    <a href="https://www.gao.gov/" target="_blank" rel="noopener" class="news-link">Visit GAO →</a>
+                </div>
+                <div class="news-card">
+                    <h3>📈 CBO Analysis</h3>
+                    <p>Congressional Budget Office economic impact assessments and projections.</p>
+                    <a href="https://www.cbo.gov/" target="_blank" rel="noopener" class="news-link">Visit CBO →</a>
+                </div>
+                <div class="news-card">
+                    <h3>🏛️ CRS Resources</h3>
+                    <p>Congressional Research Service reports on government funding and shutdowns.</p>
+                    <a href="https://crsreports.congress.gov/" target="_blank" rel="noopener" class="news-link">Browse CRS →</a>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- NEW: Keyboard Shortcuts Modal -->
+    <div id="shortcutsModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⌨️ Keyboard Shortcuts</h2>
+                <button class="modal-close" id="closeShortcuts">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <kbd>?</kbd>
+                        <span>Show keyboard shortcuts</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>/</kbd>
+                        <span>Focus search</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Esc</kbd>
+                        <span>Clear search/close modals</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>T</kbd>
+                        <span>Toggle theme</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>E</kbd>
+                        <span>Export as CSV</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>P</kbd>
+                        <span>Print view</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>S</kbd>
+                        <span>Share dashboard</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>R</kbd>
+                        <span>Reset filters</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>1-9</kbd>
+                        <span>Jump to section</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>↑/↓</kbd>
+                        <span>Scroll page</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Share Modal -->
+    <div id="shareModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔗 Share Dashboard</h2>
+                <button class="modal-close" id="closeShare">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>Copy link to share this dashboard:</p>
+                <div class="share-link-container">
+                    <input type="text" id="shareLink" readonly value="">
+                    <button id="copyLink" class="copy-btn">Copy</button>
+                </div>
+                <div class="share-options">
+                    <button class="share-option-btn" id="shareTwitter">
+                        <span>🐦 Share on Twitter</span>
+                    </button>
+                    <button class="share-option-btn" id="shareLinkedIn">
+                        <span>💼 Share on LinkedIn</span>
+                    </button>
+                    <button class="share-option-btn" id="shareEmail">
+                        <span>📧 Share via Email</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -376,5 +585,6 @@
     <script src="data.js"></script>
     <script src="app.js"></script>
     <script src="enhanced-app.js"></script>
+    <script src="features.js"></script>
 </body>
 </html>
